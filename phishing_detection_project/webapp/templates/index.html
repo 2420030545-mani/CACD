@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberGuard AI — Real-Time Phishing Detection & Threat Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Ambient cyber background glow orbs -->
+  <div class="ambient-glow orb-1"></div>
+  <div class="ambient-glow orb-2"></div>
+  <div class="ambient-glow orb-3"></div>
+  <div class="cyber-grid-overlay"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="hero-header">
+      <div class="brand-pill">
+        <span class="pulsing-dot"></span>
+        <span class="brand-pill-text">AI Threat Shield &bull; 28-Feature Multi-Model Pipeline</span>
+      </div>
+      <h1 class="hero-title">
+        Real-Time <span class="gradient-text">Phishing & Malware</span> Detection
+      </h1>
+      <p class="hero-subtitle">
+        Deep inspection engine analyzing lexical, structural, cryptographic SSL, and behavioural URL indicators with explainable AI scoring.
+      </p>
+    </header>
+
+    <!-- Quick Test Presets (Feature 1) -->
+    <section class="presets-section">
+      <div class="presets-label">Quick Test Samples:</div>
+      <div class="presets-bar">
+        <button type="button" class="preset-chip legit" data-url="https://www.google.com" title="Legitimate trusted search portal">
+          <span class="chip-icon">✓</span> Legitimate (Google)
+        </button>
+        <button type="button" class="preset-chip danger" data-url="http://paypal-verification.secure-update.xyz/login" title="Classic brand credential harvester">
+          <span class="chip-icon">⚠</span> Brand Spoof (PayPal)
+        </button>
+        <button type="button" class="preset-chip warning" data-url="http://xn--gogle-verify.com/login.php" title="Punycode IDN homograph impersonation">
+          <span class="chip-icon">🔤</span> Punycode Homograph
+        </button>
+        <button type="button" class="preset-chip danger" data-url="http://security-update-fix.org/download/client_patch.exe" title="Direct payload executable link">
+          <span class="chip-icon">⚡</span> Malware Payload (.exe)
+        </button>
+      </div>
+    </section>
+
+    <!-- URL Input & Inspection Controls -->
+    <div class="glass-card search-card">
+      <form id="check-form" class="search-form">
+        <div class="input-wrapper">
+          <span class="input-icon">🔍</span>
+          <input 
+            type="text" 
+            id="url-input" 
+            name="url" 
+            placeholder="Paste suspicious or legitimate URL (e.g. http://login-verify.xyz/auth)" 
+            autocomplete="off" 
+            required
+            spellcheck="false"
+          >
+          <button type="button" id="clear-btn" class="clear-btn hidden" title="Clear input">&times;</button>
+        </div>
+
+        <div class="form-controls-row">
+          <!-- Toggle Switch (Feature 2: Deep Network Inspection Mode) -->
+          <label class="toggle-control" title="Enable live SSL certificate, WHOIS, and redirect checks (disable for instant offline lexical analysis)">
+            <input type="checkbox" id="network-toggle" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Live SSL & WHOIS Lookup</span>
+          </label>
+
+          <button type="submit" id="submit-btn" class="btn-analyze">
+            <span class="btn-spinner hidden" id="btn-spinner"></span>
+            <span class="btn-text" id="btn-text">Analyze URL</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Error Alert Box -->
+    <div id="error-box" class="error-banner hidden" role="alert"></div>
+
+    <!-- Live Analysis Results -->
+    <main id="result-box" class="result-container hidden">
+      <!-- Verdict Card -->
+      <div class="glass-card verdict-card">
+        <div class="verdict-header">
+          <div class="verdict-meta">
+            <span class="verdict-label">Analysis Verdict</span>
+            <div class="badge-wrapper">
+              <span id="verdict-badge" class="verdict-badge"></span>
+            </div>
+          </div>
+          <div class="model-badge">
+            <span class="model-icon">🤖</span>
+            <span id="model-used">Model: RandomForest</span>
+          </div>
+        </div>
+
+        <!-- Risk Progress Bar -->
+        <div class="risk-section">
+          <div class="risk-labels">
+            <span class="risk-title">Calculated Phishing Risk Score</span>
+            <span id="risk-score-text" class="risk-percentage">0.0%</span>
+          </div>
+          <div class="risk-track">
+            <div id="risk-bar-fill" class="risk-fill"></div>
+          </div>
+          <div class="risk-scale-markers">
+            <span>0% Safe</span>
+            <span>35% Suspicious</span>
+            <span>70% High Phishing</span>
+            <span>100% Critical</span>
+          </div>
+        </div>
+
+        <!-- Explainable AI Driver Indicators -->
+        <div class="indicators-section">
+          <h3 class="section-title">
+            <span class="title-icon">🔎</span> Why This URL Was Flagged (Explainable AI)
+          </h3>
+          <ul id="indicators-list" class="indicators-list"></ul>
+        </div>
+
+        <!-- Feature 3: Detailed Technical Feature Breakdown Matrix -->
+        <div class="feature-matrix-section">
+          <div class="section-header-row">
+            <h3 class="section-title">
+              <span class="title-icon">📊</span> Extracted Feature Matrix (28 Metrics)
+            </h3>
+            <span class="matrix-hint">Core Detection Signals</span>
+          </div>
+          <div class="feature-grid" id="feature-grid">
+            <!-- Dynamically populated feature chips -->
+          </div>
+        </div>
+
+        <!-- Feature 4: Audit Actions (Copy Report & History) -->
+        <div class="audit-actions-row">
+          <button type="button" id="copy-report-btn" class="btn-secondary">
+            <span class="action-icon">📋</span> Copy Security Audit Report
+          </button>
+          <span id="copy-toast" class="copy-toast hidden">Copied to clipboard!</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Recent Scans History Section -->
+    <section id="history-section" class="glass-card history-card hidden">
+      <div class="history-header">
+        <h3 class="section-title">
+          <span class="title-icon">🕒</span> Recent Scan History
+        </h3>
+        <button type="button" id="clear-history-btn" class="btn-text-link">Clear History</button>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>
+        <strong>Intelligent Artificial Intelligence Framework for Real-Time Detection & Classification of Phishing Websites</strong>
+      </p>
+      <p class="footer-meta">
+        Harshini S R &bull; P. Priyanka &bull; Mani Charan Chava &bull; Guide: Ms. Vinisha &bull; Dept. of Computer Science & Engineering
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('check-form');
+    const urlInput = document.getElementById('url-input');
+    const clearBtn = document.getElementById('clear-btn');
+    const networkToggle = document.getElementById('network-toggle');
+    const errorBox = document.getElementById('error-box');
+    const resultBox = document.getElementById('result-box');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const btnText = document.getElementById('btn-text');
+    const copyReportBtn = document.getElementById('copy-report-btn');
+    const copyToast = document.getElementById('copy-toast');
+    const historySection = document.getElementById('history-section');
+    const historyList = document.getElementById('history-list');
+    const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+    let currentAnalysis = null;
+    const HISTORY_STORAGE_KEY = 'cyberguard_scan_history';
+
+    // Show/hide clear input button
+    urlInput.addEventListener('input', () => {
+      clearBtn.classList.toggle('hidden', !urlInput.value);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      urlInput.value = '';
+      clearBtn.classList.add('hidden');
+      urlInput.focus();
+    });
+
+    // Preset quick-test buttons
+    document.querySelectorAll('.preset-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        urlInput.value = btn.dataset.url;
+        clearBtn.classList.remove('hidden');
+        form.dispatchEvent(new Event('submit'));
+      });
+    });
+
+    // Form submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = urlInput.value.trim();
+      if (!url) return;
+
+      errorBox.classList.add('hidden');
+      resultBox.classList.add('hidden');
+      submitBtn.disabled = true;
+      btnSpinner.classList.remove('hidden');
+      btnText.textContent = networkToggle.checked ? 'Inspecting Live…' : 'Analyzing…';
+
+      try {
+        const res = await fetch('/check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            url,
+            check_network: networkToggle.checked
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorBox.textContent = data.error || 'Failed to analyze URL.';
+          errorBox.classList.remove('hidden');
+          return;
+        }
+
+        currentAnalysis = data;
+        renderResult(data);
+        saveToHistory(data);
+      } catch (err) {
+        errorBox.textContent = 'Server connection error: ' + err.message;
+        errorBox.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        btnSpinner.classList.add('hidden');
+        btnText.textContent = 'Analyze URL';
+      }
+    });
+
+    function renderResult(data) {
+      // Verdict Badge
+      const badge = document.getElementById('verdict-badge');
+      badge.textContent = data.verdict.toUpperCase();
+      badge.className = 'verdict-badge badge-' + data.verdict;
+
+      // Model
+      document.getElementById('model-used').textContent = 'Engine: ' + data.model_used;
+
+      // Risk score bar & percentage
+      const score = data.risk_score;
+      const scoreEl = document.getElementById('risk-score-text');
+      scoreEl.textContent = score.toFixed(1) + '%';
+      
+      const fill = document.getElementById('risk-bar-fill');
+      fill.style.width = Math.max(score, 4) + '%';
+      fill.className = 'risk-fill ' + 
+        (score >= 70 ? 'risk-danger' : score >= 35 ? 'risk-warning' : 'risk-safe');
+
+      scoreEl.className = 'risk-percentage ' + 
+        (score >= 70 ? 'text-danger' : score >= 35 ? 'text-warning' : 'text-safe');
+
+      // Indicators list
+      const list = document.getElementById('indicators-list');
+      list.innerHTML = '';
+      if (data.indicators && data.indicators.length > 0) {
+        data.indicators.forEach(ind => {
+          const li = document.createElement('li');
+          const isClean = ind.startsWith('No common phishing');
+          li.className = isClean ? 'clean' : 'flagged';
+          li.innerHTML = `<span class="indicator-icon">${isClean ? '✓' : '⚠'}</span><span>${ind}</span>`;
+          list.appendChild(li);
+        });
+      }
+
+      // Feature Matrix Breakdown (Feature 3)
+      renderFeatureMatrix(data.features || {});
+
+      resultBox.classList.remove('hidden');
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function renderFeatureMatrix(feats) {
+      const grid = document.getElementById('feature-grid');
+      grid.innerHTML = '';
+
+      const items = [
+        {
+          label: 'Punycode Homograph',
+          value: feats.has_punycode === 1 ? 'DETECTED (xn--)' : 'Clean Standard',
+          status: feats.has_punycode === 1 ? 'bad' : 'good'
+        },
+        {
+          label: 'Shannon Entropy',
+          value: feats.entropy !== undefined ? `${feats.entropy.toFixed(2)} bits` : 'N/A',
+          status: (feats.entropy || 0) >= 4.4 ? 'bad' : 'good'
+        },
+        {
+          label: 'Path Double Slash (//)',
+          value: feats.has_double_slash_in_path === 1 ? 'DETECTED (Bypass)' : 'Clean Single',
+          status: feats.has_double_slash_in_path === 1 ? 'bad' : 'good'
+        },
+        {
+          label: 'Payload / Executable',
+          value: feats.has_sensitive_file_ext === 1 ? 'DANGEROUS EXT' : 'Standard Web',
+          status: feats.has_sensitive_file_ext === 1 ? 'bad' : 'good'
+        },
+        {
+          label: 'HTTPS Encryption',
+          value: feats.is_https_scheme === 1 ? 'Active (HTTPS)' : 'Insecure (HTTP)',
+          status: feats.is_https_scheme === 1 ? 'good' : 'bad'
+        },
+        {
+          label: 'SSL Certificate State',
+          value: feats.ssl_valid === 1 ? 'Valid / Verified' : feats.ssl_valid === 0 ? 'Invalid / Untrusted' : 'Not Checked / Offline',
+          status: feats.ssl_valid === 1 ? 'good' : feats.ssl_valid === 0 ? 'bad' : 'neutral'
+        },
+        {
+          label: 'Suspicious Keywords',
+          value: feats.suspicious_keyword_count !== undefined ? `${feats.suspicious_keyword_count} keyword(s)` : '0',
+          status: (feats.suspicious_keyword_count || 0) > 0 ? 'bad' : 'good'
+        },
+        {
+          label: 'IP Host Detection',
+          value: feats.has_ip_address === 1 ? 'Raw IP Address' : 'Named Domain',
+          status: feats.has_ip_address === 1 ? 'bad' : 'good'
+        }
+      ];
+
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = `feature-pill ${item.status}`;
+        card.innerHTML = `
+          <div class="feature-label">${item.label}</div>
+          <div class="feature-val">${item.value}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Feature 4: Copy Report to Clipboard
+    copyReportBtn.addEventListener('click', () => {
+      if (!currentAnalysis) return;
+      const text = [
+        `=== CYBERGUARD AI PHISHING AUDIT REPORT ===`,
+        `URL: ${currentAnalysis.url}`,
+        `Verdict: ${currentAnalysis.verdict.toUpperCase()}`,
+        `Risk Score: ${currentAnalysis.risk_score}%`,
+        `Detection Model: ${currentAnalysis.model_used}`,
+        `Indicators:`,
+        ...(currentAnalysis.indicators || []).map(i => `  - ${i}`),
+        `============================================`
+      ].join('\n');
+
+      navigator.clipboard.writeText(text).then(() => {
+        copyToast.classList.remove('hidden');
+        setTimeout(() => copyToast.classList.add('hidden'), 2500);
+      });
+    });
+
+    // History handling
+    function loadHistory() {
+      try {
+        const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        renderHistory(list);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function saveToHistory(item) {
+      try {
+        const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+        let list = raw ? JSON.parse(raw) : [];
+        list = [ { ...item, timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }, ...list.filter(x => x.url !== item.url) ];
+        if (list.length > 6) list = list.slice(0, 6);
+        localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(list));
+        renderHistory(list);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderHistory(list) {
+      if (!list || list.length === 0) {
+        historySection.classList.add('hidden');
+        return;
+      }
+      historySection.classList.remove('hidden');
+      historyList.innerHTML = '';
+      list.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'history-item';
+        row.innerHTML = `
+          <div class="history-left">
+            <span class="history-badge badge-${item.verdict}">${item.verdict.toUpperCase()}</span>
+            <span class="history-url" title="${item.url}">${item.url}</span>
+          </div>
+          <div class="history-right">
+            <span class="history-score">${item.risk_score}%</span>
+            <span class="history-time">${item.timestamp || ''}</span>
+          </div>
+        `;
+        row.addEventListener('click', () => {
+          urlInput.value = item.url;
+          clearBtn.classList.remove('hidden');
+          renderResult(item);
+          currentAnalysis = item;
+        });
+        historyList.appendChild(row);
+      });
+    }
+
+    clearHistoryBtn.addEventListener('click', () => {
+      localStorage.removeItem(HISTORY_STORAGE_KEY);
+      renderHistory([]);
+    });
+
+    // Init history on page load
+    loadHistory();
+  </script>
+</body>
+</html>

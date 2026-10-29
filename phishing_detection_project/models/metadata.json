@@ -1,0 +1,197 @@
+{
+  "best_model": "RandomForest",
+  "feature_names": [
+    "url_length",
+    "hostname_length",
+    "path_length",
+    "num_dots",
+    "num_hyphens",
+    "num_underscores",
+    "num_slashes",
+    "num_digits",
+    "digit_ratio",
+    "num_special_chars",
+    "num_subdomains",
+    "num_query_params",
+    "has_ip_address",
+    "has_at_symbol",
+    "has_https_token_in_domain",
+    "uses_url_shortener",
+    "has_suspicious_keywords",
+    "suspicious_keyword_count",
+    "tld_length",
+    "has_port",
+    "is_https_scheme",
+    "ssl_valid",
+    "domain_age_days",
+    "redirect_count",
+    "has_punycode",
+    "entropy",
+    "has_double_slash_in_path",
+    "has_sensitive_file_ext"
+  ],
+  "all_results": [
+    {
+      "model": "RandomForest",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_positive_rate": 0.0,
+      "train_seconds": 0.62
+    },
+    {
+      "model": "SVM",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_positive_rate": 0.0,
+      "train_seconds": 0.16
+    },
+    {
+      "model": "XGBoost",
+      "accuracy": 0.9979,
+      "precision": 0.9959,
+      "recall": 1.0,
+      "f1_score": 0.9979,
+      "false_positive_rate": 0.0042,
+      "train_seconds": 0.92
+    },
+    {
+      "model": "DecisionTree",
+      "accuracy": 0.9958,
+      "precision": 0.9917,
+      "recall": 1.0,
+      "f1_score": 0.9959,
+      "false_positive_rate": 0.0083,
+      "train_seconds": 0.02
+    },
+    {
+      "model": "LogisticRegression",
+      "accuracy": 0.9917,
+      "precision": 0.9836,
+      "recall": 1.0,
+      "f1_score": 0.9917,
+      "false_positive_rate": 0.0167,
+      "train_seconds": 0.02
+    }
+  ],
+  "feature_importance_ranking": [
+    [
+      "domain_age_days",
+      0.1535296414369595
+    ],
+    [
+      "num_subdomains",
+      0.10438021378009525
+    ],
+    [
+      "hostname_length",
+      0.0857572292234077
+    ],
+    [
+      "num_hyphens",
+      0.08233545879788691
+    ],
+    [
+      "digit_ratio",
+      0.0683839021977433
+    ],
+    [
+      "num_digits",
+      0.06653547368258583
+    ],
+    [
+      "tld_length",
+      0.05581439580279829
+    ],
+    [
+      "suspicious_keyword_count",
+      0.046622675523975164
+    ],
+    [
+      "num_special_chars",
+      0.04034824938577877
+    ],
+    [
+      "num_query_params",
+      0.04033338263440157
+    ],
+    [
+      "url_length",
+      0.03962047635437434
+    ],
+    [
+      "num_dots",
+      0.036848797724536676
+    ],
+    [
+      "has_suspicious_keywords",
+      0.03601195037270639
+    ],
+    [
+      "redirect_count",
+      0.028724959981802408
+    ],
+    [
+      "entropy",
+      0.02686869184264382
+    ],
+    [
+      "uses_url_shortener",
+      0.020860016489711673
+    ],
+    [
+      "num_slashes",
+      0.014112742784753348
+    ],
+    [
+      "path_length",
+      0.013655531047555057
+    ],
+    [
+      "num_underscores",
+      0.01305158843001985
+    ],
+    [
+      "ssl_valid",
+      0.009476736287696099
+    ],
+    [
+      "has_ip_address",
+      0.006542559944388011
+    ],
+    [
+      "is_https_scheme",
+      0.004836618683055764
+    ],
+    [
+      "has_punycode",
+      0.002444593327535304
+    ],
+    [
+      "has_double_slash_in_path",
+      0.0018160193237469924
+    ],
+    [
+      "has_port",
+      0.0007978465968145477
+    ],
+    [
+      "has_sensitive_file_ext",
+      0.0002902483430274381
+    ],
+    [
+      "has_at_symbol",
+      0.0
+    ],
+    [
+      "has_https_token_in_domain",
+      0.0
+    ]
+  ],
+  "trained_on": "C:\\Users\\mani0\\OneDrive\\Desktop\\phishing_detection_project\\data\\phishing_dataset.csv",
+  "n_train": 1920,
+  "n_test": 480
+}

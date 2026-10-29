@@ -1,0 +1,9 @@
+numpy>=1.24
+scikit-learn>=1.3
+joblib>=1.3
+Flask>=3.0
+requests>=2.31
+
+# Optional (project runs fine without these, with reduced feature signal):
+xgboost>=1.7        # enables the 5th candidate model
+python-whois>=0.9    # enables live domain-age feature at inference time
